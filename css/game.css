@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #0f172a;
     font-family: "Segoe UI", sans-serif;
     color: white;
@@ -9,8 +9,10 @@ body {
     align-items: center;
     justify-content: flex-start;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding-top: 40px;
+    padding-bottom: 100px;
 }
 
 .game-box {
@@ -87,7 +89,8 @@ h1 {
 
 .game-box {
     position: relative;
-    padding-top: 40px; /* beri jarak atas untuk tombol */
+    padding-top: 40px;
+    padding-bottom: 80px;
 }
 
 .btn-guide,
@@ -154,4 +157,57 @@ h1 {
 .leaderboard-link:hover {
     color: #a78bfa;
     text-decoration: underline;
+}
+
+.fade-in {
+    animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.correct {
+    background-color: #22c55e !important;
+}
+
+.partial {
+    background-color: #eab308 !important;
+}
+
+.wrong {
+    background-color: #1f2937 !important;
+}
+
+.level-dropdown {
+    display: block;
+    margin: 0 auto 10px auto;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    width: 180px;
+    max-width: 90%;
+    background-color: #1e293b;
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    text-align: center;
+    text-align-last: center;
+    outline: none;
+    transition: border 0.2s;
+    position: relative;
+    z-index: 2;
+}
+
+.level-dropdown:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.4);
 }
