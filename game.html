@@ -2,281 +2,50 @@
 <html lang="id">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tebak Kata</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <style>
-    body {
-      background: radial-gradient(circle at center, #0f172a, #0b1120);
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      min-height: 100vh;
-      padding-top: 40px;
-    }
-
-    .game-box {
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 80px 30px 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-      max-width: 600px;
-      margin: auto;
-      position: relative;
-    }
-
-    .letter-input {
-      width: 50px;
-      height: 50px;
-      font-size: 1.5rem;
-      text-align: center;
-      border: 2px solid #4b5563;
-      border-radius: 8px;
-      background-color: #1f2937;
-      color: white;
-      text-transform: uppercase;
-    }
-
-    .correct {
-      background-color: #22c55e !important;
-    }
-
-    .partial {
-      background-color: #eab308 !important;
-    }
-
-    .wrong {
-      background-color: #1f2937 !important;
-    }
-
-    .game-btn {
-      background: linear-gradient(to right, #3b82f6, #8b5cf6);
-      border: none;
-      color: white;
-      border-radius: 10px;
-      font-weight: bold;
-      padding: 10px;
-      transition: 0.2s;
-    }
-
-    .game-btn:hover {
-      opacity: 0.9;
-    }
-
-    .info {
-      background: #1f2937;
-      padding: 10px;
-      border-radius: 10px;
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    .fade-in {
-      animation: fadeIn 2s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Tebak Kata</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./css/game.css">
 </head>
 
 <body>
-  <div class="text-center mb-3">
-    <h1><span class="logo"></span><span style="color: #8ab4f8;">Tebak</span> Kata</h1>
-    <h5 id="tampilanNama">Pemain: Anonim</h5>
-  </div>
 
-  <div class="game-box">
-    <div id="input-container" class="d-flex flex-column align-items-center gap-3 mb-4">
-      <!-- Baris akan dibuat dinamis -->
+
+    <img src="icon-ps.png" class="logo" alt="Logo Game" />
+    <h1>TEBAK KATA</h1>
+    <div class="player-info text-center mb-4">
+        <p class="fw-bold text-white">Pemain : <span id="namaUser">RAHMAT</span></p>
+        <select class="form-select level-dropdown" id="levelSelect">
+            <option value="easy">EASY</option>
+            <option value="medium">MEDIUM</option>
+            <option value="hard">HARD</option>
+        </select>
     </div>
 
-    <div id="kesempatanInfo" class="info">Kesempatan salah: 6</div>
 
-    <button onclick="Tebak()" id="btnTebak" class="game-btn w-100 mb-3">Tebak!</button>
-    <div id="result-message" class="text-warning text-center"></div>
-  </div>
+    <div class="game-box pb-4 p-5">
+        <div class="top-buttons">
+            <button class="btn-guide" onclick="showGuide()">?</button>
+            <button class="btn-exit" onclick="exitGame()">X</button>
+        </div>
+        <div class="word-inputs">
+            <input type="text" maxlength="1" />
+            <input type="text" maxlength="1" />
+            <input type="text" maxlength="1" />
+            <input type="text" maxlength="1" />
+            <input type="text" maxlength="1" />
+        </div>
 
-  <script>
-    window.onload = function () {
-      localStorage.removeItem("kataTarget");
-    };
+        <div class="status">Kesempatan salah: <span id="chance">5</span></div>
+        <button class="btn-gradient">Tebak!</button>
+        <a href="leaderboard.html" class="leaderboard-link mt-3">Lihat Leaderboard</a>
 
-
-
-    let targetWord = localStorage.getItem("kataTarget");
-
-    if (!targetWord) {
-      const daftarKata = JSON.parse(localStorage.getItem("daftarKata")) || ["LAPAR"];
-      targetWord = daftarKata[Math.floor(Math.random() * daftarKata.length)].toUpperCase();
-      localStorage.setItem("kataTarget", targetWord);
-    }
-
-    console.log(targetWord);
-
-    const userList = JSON.parse(localStorage.getItem("daftarUser")) || [];
-    const Params = new URLSearchParams(window.location.search);
-    const id = parseInt(Params.get("id"));;
-    const currentUser = userList.find(u => u.id === id);
-    console.log(currentUser);
-
-    const maxKesempatan = 6;
-    const maxPerBaris = targetWord.length;
-    let kesempatanSalah = maxKesempatan;
-    const container = document.getElementById("input-container");
-    const resultMessage = document.getElementById("result-message");
-
-    document.getElementById('tampilanNama').innerText = `Pemain : ${currentUser.userName.toUpperCase()}`
-    function buatBarisBaru() {
-      const row = document.createElement("div");
-      row.classList.add("row-bar", "d-flex", "gap-2", "fade-in");
-
-      for (let i = 0; i < maxPerBaris; i++) {
-        const input = document.createElement("input");
-        input.className = "letter-input";
-        input.setAttribute("maxlength", "1");
-        input.setAttribute("type", "text");
-        row.appendChild(input);
-      }
-      container.appendChild(row);
-      setupAutoFocus();
-    }
-
-    function setupAutoFocus() {
-      const inputs = document.querySelectorAll(".letter-input");
-      for (let i = 0; i < inputs.length; i++) {
-        const input = inputs[i];
-
-        input.addEventListener("input", function (e) {
-          const val = e.target.value.toUpperCase().replace(/[^A-Z]/g, "");
-          e.target.value = val;
-          // Pindah ke input berikutnya jika ada isi
-          if (val && i < inputs.length - 1) {
-            inputs[i + 1].focus();
-          }
-        });
-
-        input.addEventListener("keydown", function (e) {
-
-          if (e.key === "Backspace" && input.value === "" && i > 0) {
-            inputs[i - 1].focus();
-          }
-        });
-      }
-    }
-
-    function cekTebakan() {
-      const rows = container.querySelectorAll(".row-bar");
-      const lastRow = rows[rows.length - 1];
-      const inputs = lastRow.querySelectorAll("input");
-      let guess = "";
-
-      for (let i = 0; i < inputs.length; i++) {
-        guess += inputs[i].value;
-
-      }
-
-      if (guess.length < maxPerBaris) {
-        resultMessage.innerText = "Lengkapi semua huruf.";
-        for (let i = 0; i < inputs.length; i++) {
-          inputs[i].value = ''
-        }
-        return;
-      }
-
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = true;
-      }
-
-      const letterCount = {};
-      for (let i = 0; i < targetWord.length; i++) {
-        const char = targetWord[i];
-        if (letterCount[char] === undefined) {
-          letterCount[char] = 0;
-        }
-        letterCount[char]++;
-      }
-
-      const status = []
-      for (let i = 0; i < maxPerBaris; i++) {
-        status.push('wrong')
-      }
-
-      for (let i = 0; i < maxPerBaris; i++) {
-        if (guess[i] === targetWord[i]) {
-          status[i] = "correct";
-          letterCount[guess[i]]--;
-        }
-      }
-
-      for (let i = 0; i < maxPerBaris; i++) {
-        if (status[i] === "correct") {
-          continue
-        };
-        if (targetWord.includes(guess[i]) && letterCount[guess[i]] > 0) {
-          status[i] = "partial";
-          letterCount[guess[i]]--;
-        }
-      }
-
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].classList.add(status[i]);
-      }
-
-      if (guess === targetWord) {
-        alert("🎉 BERHASIL!");
-        resultMessage.innerText = "";
-        location.reload();
-        return;
-      }
-
-      if (kesempatanSalah > 0) {
-        resultMessage.innerText = "Jawaban kamu salah!";
-        kesempatanSalah--;
-        document.getElementById("kesempatanInfo").innerText = `Kesempatan salah: ${kesempatanSalah}`;
-
-        if (kesempatanSalah > 0) {
-          buatBarisBaru();
-        }
-      } else {
-        resultMessage.innerText = `Kesempatan habis. Jawabannya: ${targetWord}`;
-        document.getElementById("kesempatanInfo").innerText = `Kesempatan salah: 0`;
-      }
-
-    }
-
-    function Tebak() {
-
-      cekTebakan();
-
-      setTimeout(() => {
-        const rows = document.querySelectorAll(".row-bar");
-        const lastRow = rows[rows.length - 1];
-        const firstInput = lastRow.querySelector("input:not(:disabled)");
-        if (firstInput) firstInput.focus();
-      }, 100);
-
-    }
-
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        document.getElementById("btnTebak").click();
-      }
-    });
-
-
-    buatBarisBaru();
-  </script>
+    </div>
 </body>
 
 </html>
