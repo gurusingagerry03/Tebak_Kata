@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Tebak Kata</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: radial-gradient(circle at center, #0f172a, #0b1120);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-control {
+            background-color: #1f2937;
+            color: white;
+            border: 2px solid #4b5563;
+            border-radius: 8px;
+        }
+
+        .btn-login {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            border: none;
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            background-color: #1f2937;
+            color: white;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5);
+            box-shadow: none;
+            outline: none;
+        }
+
+        .btn-login:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-box text-center">
+        <h2 class="mb-4">Masukkan Username</h2>
+        <form id="loginForm">
+            <input type="text" id="username" class="form-control mb-3" placeholder="Contoh: Rahel" required />
+            <button type="submit" class="btn-login">Mulai Bermains</button>
+        </form>
+    </div>
+
+    <script>
+        let user = JSON.parse(localStorage.getItem("daftarUser")) || [];
+
+
+        function createUser() {
+            const input = document.getElementById('username');
+
+            let id = 1
+            if (user.length !== 0) {
+                id = user[user.length - 1].id + 1
+            }
+
+            let obj = {
+                id,
+                userName: input.value,
+                score: 0
+            }
+
+
+            if (input.value !== '') {
+
+                for (let i = 0; i < user.length; i++) {
+                    if (user[i].userName.toUpperCase() === input.value.toUpperCase()) {
+                        window.location.href = `game.html?id=${user[i].id}`;
+                        return;
+                    }
+                }
+
+                user.push(obj)
+                localStorage.setItem("daftarUser", JSON.stringify(user));
+                window.location.href = `game.html?id=${id}`;
+
+            }
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            createUser()
+        });
+    </script>
+</body>
+
+</html>
