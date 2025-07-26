@@ -1,1 +1,157 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #0f172a;
+    font-family: "Segoe UI", sans-serif;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+    padding-top: 40px;
+}
 
+.game-box {
+    position: relative;
+    z-index: 1;
+    background-color: #1a1f2e;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    text-align: center;
+}
+
+.logo {
+    width: 96px;
+    margin-bottom: 15px;
+    z-index: 1;
+}
+
+h1 {
+    font-family: "Bitcount Prop Single", sans-serif;
+    font-size: 32px;
+    margin-bottom: 5px;
+    z-index: 1;
+}
+
+.sub {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    z-index: 1;
+}
+
+.word-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.word-inputs input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 24px;
+    background-color: #0f172a;
+    color: white;
+    border: 2px;
+    border-radius: 8px;
+}
+
+.status {
+    background-color: #111827;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.btn-gradient {
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.btn-gradient:hover {
+    opacity: 0.95;
+}
+
+.game-box {
+    position: relative;
+    padding-top: 40px; /* beri jarak atas untuk tombol */
+}
+
+.btn-guide,
+.btn-exit {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    background-color: #1e293b;
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.btn-guide {
+    top: 10px;
+    left: 10px;
+}
+
+.btn-exit {
+    top: 10px;
+    right: 10px;
+}
+
+.btn-guide:hover,
+.btn-exit:hover {
+    background-color: #334155;
+    cursor: pointer;
+}
+
+.level-dropdown {
+    max-width: 150px;
+    margin: 0 auto 10px auto;
+    font-weight: bold;
+    background-color: #1e293b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    position: relative;
+    z-index: 2;
+
+    text-align: center;
+    text-align-last: center;
+}
+.level-dropdown:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #8b5cf6;
+}
+
+.leaderboard-link {
+    display: block;
+    margin-top: 12px;
+    text-align: center;
+    color: #8b5cf6;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.leaderboard-link:hover {
+    color: #a78bfa;
+    text-decoration: underline;
+}
