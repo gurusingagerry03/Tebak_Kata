@@ -1,0 +1,65 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #0f172a;
+    font-family: "Segoe UI", sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-box {
+    position: relative;
+    z-index: 1;
+    background-color: #1a1f2e;
+    padding: 50px 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+    text-align: center;
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-box img {
+    width: 96px;
+    margin-bottom: 25px;
+}
+
+.form-control {
+    background-color: #111827;
+    border: none;
+    color: #fff;
+    padding: 12px;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    background-color: #111827;
+    color: #fff;
+    outline: none;
+    box-shadow: 0 0 0 2px #8b5cf6;
+}
+
+.form-control::placeholder {
+    color: #aaa;
+}
+
+.btn-gradient {
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-gradient:hover {
+    opacity: 0.95;
+}
+
+.judul {
+    font-family: "Bitcount Prop Single", sans-serif;
+}
