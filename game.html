@@ -11,41 +11,66 @@
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="./css/game.css">
+    <link rel="stylesheet" href="./css/model.css">
+    <link rel="stylesheet" href="./css/background.css">
 </head>
 
 <body>
-
-
+    <div class="background-stars" id="stars"></div>
     <img src="icon-ps.png" class="logo" alt="Logo Game" />
     <h1>TEBAK KATA</h1>
     <div class="player-info text-center mb-4">
-        <p class="fw-bold text-white">Pemain : <span id="namaUser">RAHMAT</span></p>
+        <p class="fw-bold text-white">Pemain : <span id="namaUser"></span></p>
         <select class="form-select level-dropdown" id="levelSelect">
             <option value="easy">EASY</option>
             <option value="medium">MEDIUM</option>
             <option value="hard">HARD</option>
         </select>
     </div>
-
-
     <div class="game-box pb-4 p-5">
         <div class="top-buttons">
             <button class="btn-guide" onclick="showGuide()">?</button>
-            <button class="btn-exit" onclick="exitGame()">X</button>
+            <button id="btnTebak" class="btn-exit" onclick="window.location.href='index.html'">X</button>
         </div>
-        <div class="word-inputs">
-            <input type="text" maxlength="1" />
-            <input type="text" maxlength="1" />
-            <input type="text" maxlength="1" />
-            <input type="text" maxlength="1" />
-            <input type="text" maxlength="1" />
-        </div>
+        <div id="input-container" class="word-inputs d-flex flex-column align-items-center gap-3 mb-4">
 
+        </div>
         <div class="status">Kesempatan salah: <span id="chance">5</span></div>
-        <button class="btn-gradient">Tebak!</button>
+        <button onclick="Tebak()" id="btnTebak" class="btn-gradient">Tebak!</button>
         <a href="leaderboard.html" class="leaderboard-link mt-3">Lihat Leaderboard</a>
+        <div id="result-message" class="text-warning text-center"></div>
+
 
     </div>
+    <div class="modal-guide" id="guideModal">
+        <div class="modal-content">
+            <h4>📘 Aturan Permainan</h4>
+
+            <p><strong>1. Mekanisme Permainan</strong></p>
+            <ul>
+                <li><strong>Easy</strong>: Menebak kata dengan 5 huruf</li>
+                <li><strong>Medium</strong>: Menebak kata dengan 6 huruf</li>
+                <li><strong>Hard</strong>: Menebak kata dengan 7 huruf</li>
+            </ul>
+
+            <p><strong>2. Skor yang Diperoleh</strong></p>
+            <ul>
+                <li><strong>Easy</strong>: +100 poin untuk setiap jawaban benar</li>
+                <li><strong>Medium</strong>: +200 poin untuk setiap jawaban benar</li>
+                <li><strong>Hard</strong>: +300 poin untuk setiap jawaban benar</li>
+            </ul>
+
+            <p><strong>3. Ketentuan Akses Level</strong></p>
+            <ul>
+                <li><strong>Medium</strong>: Dapat diakses setelah mencapai skor minimal 500</li>
+                <li><strong>Hard</strong>: Dapat diakses setelah mencapai skor minimal 1500</li>
+            </ul>
+            <button onclick="closeGuide()" class="btn-close-guide">Tutup</button>
+        </div>
+    </div>
+
+    <script src="./js/background.js"></script>
+    <script src="./js/game.js"></script>
 </body>
 
 </html>
