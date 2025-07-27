@@ -36,54 +36,62 @@
     <div class="game-box pb-4 p-5">
         <div class="top-buttons">
             <button class="btn-guide" onclick="showGuide()">?</button>
-            <button id="btnTebak" class="btn-exit" onclick="window.location.href='index.html'">X</button>
+            <button id="btnTebak" class="btn-exit" onclick="closeGame()">X</button>
         </div>
-        <div id="input-container" class="word-inputs d-flex flex-column align-items-center gap-3 mb-4">
+        <div id="input-container" class="word-inputs d-flex flex-column align-items-center gap-3 mb-2">
 
         </div>
+        <div id="result-message" class="text-warning text-center mb-2"></div>
         <div class="status">Kesempatan salah: <span id="chance">5</span></div>
         <button onclick="Tebak()" id="btnTebak" class="btn-gradient">Tebak!</button>
-        <a href="leaderboard.html" class="leaderboard-link mt-3">Lihat Leaderboard</a>
-        <div id="result-message" class="text-warning text-center"></div>
+        <a href="#" id="leaderboardLink" class="leaderboard-link mt-3">Lihat Leaderboard</a>
     </div>
-    <div class="modal-guide" id="guideModal">
+    <div id="guideModal" class="modal-guide">
         <div class="modal-content">
             <h4>📘 Aturan Permainan</h4>
 
-            <p><strong>1. Mekanisme Permainan</strong></p>
-            <ul>
-                <li><strong>Easy</strong>: Menebak kata dengan 5 huruf</li>
-                <li><strong>Medium</strong>: Menebak kata dengan 7 huruf</li>
-                <li><strong>Hard</strong>: Menebak kata dengan 10 huruf</li>
-            </ul>
+            <ol>
+                <li><strong>Mekanisme Permainan</strong>
+                    <ul>
+                        <li><strong>Easy</strong>: Menebak kata dengan 4 huruf</li>
+                        <li><strong>Medium</strong>: Menebak kata dengan 5 huruf</li>
+                        <li><strong>Hard</strong>: Menebak kata dengan 6 huruf</li>
+                    </ul>
+                </li>
 
-            <p><strong>2. Skor yang Diperoleh</strong></p>
-            <ul>
-                <li><strong>Easy</strong>: +100 poin untuk setiap jawaban benar</li>
-                <li><strong>Medium</strong>: +200 poin untuk setiap jawaban benar</li>
-                <li><strong>Hard</strong>: +300 poin untuk setiap jawaban benar</li>
-            </ul>
+                <li><strong>Skor yang Diperoleh</strong>
+                    <ul>
+                        <li><strong>Easy</strong>: +100 poin untuk setiap jawaban benar</li>
+                        <li><strong>Medium</strong>: +200 poin untuk setiap jawaban benar</li>
+                        <li><strong>Hard</strong>: +300 poin untuk setiap jawaban benar</li>
+                    </ul>
+                </li>
 
-            <p><strong>3. Ketentuan Akses Level</strong></p>
-            <ul>
-                <li><strong>Medium</strong>: Dapat diakses setelah mencapai skor minimal 500</li>
-                <li><strong>Hard</strong>: Dapat diakses setelah mencapai skor minimal 1500</li>
-            </ul>
-            
-            <p><strong>4. Cara Bermain</strong></p>
-            <ul>
-                <li>Tebak kata yang tersembunyi dengan memasukkan huruf satu per satu</li>
-                <li>Hijau = huruf benar di posisi yang tepat</li>
-                <li>Kuning = huruf benar tapi di posisi yang salah</li>
-                <li>Abu-abu = huruf tidak ada dalam kata</li>
-                <li>Anda memiliki 5 kesempatan untuk menebak</li>
-            </ul>
-            
+                <li><strong>Ketentuan Akses Level</strong>
+                    <ul>
+                        <li><strong>Medium</strong>: Mencapai skor minimal 500</li>
+                        <li><strong>Hard</strong>: Mencapai skor minimal 1500</li>
+                    </ul>
+                </li>
+
+                <li><strong>Cara Bermain</strong>
+                    <ul>
+                        <li>Tebak kata yang tersembunyi dengan memasukkan huruf satu per satu</li>
+                        <li>Hijau = huruf benar di posisi yang tepat</li>
+                        <li>Kuning = huruf benar tapi di posisi yang salah</li>
+                        <li>Abu-abu = huruf tidak ada dalam kata</li>
+                        <li>Anda memiliki 5 kesempatan untuk menebak</li>
+                    </ul>
+                </li>
+            </ol>
+
             <button onclick="closeGuide()" class="btn-close-guide">Tutup</button>
         </div>
     </div>
 
+
     <script src="./js/background.js"></script>
+    <script src="./js/score.js"></script>
     <script src="./js/game.js"></script>
 </body>
 

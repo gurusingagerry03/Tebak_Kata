@@ -2,163 +2,14 @@ window.onload = function () {
     localStorage.removeItem("kataTarget");
 };
 
-const userList = JSON.parse(localStorage.getItem("daftarUser")) || [];
-const Params = new URLSearchParams(window.location.search);
-const id = parseInt(Params.get("id"));
-const currentUser = userList.find((u) => u.id === id);
-if (!currentUser) {
-      window.location.href = "/index.html";
-}
-
-const levelSelect = document.getElementById('levelSelect');
-const minimumScores = {
-    easy: 0,
-    medium: 500,
-    hard: 1500
-};
-
-const scorePerLevel = {
-    easy: 100,
-    medium: 200,
-    hard: 300
-};
-
-function checkLevelAccess(level, showOverlay = true) {
-    const userScore = currentUser.score || 0;
-    const requiredScore = minimumScores[level];
-    
-    if (userScore < requiredScore) {
-        if (showOverlay) {
-            showLevelLockedOverlay(level, requiredScore, userScore);
-        }
-        return false;
-    }
-    return true;
-}
-
-function showLevelLockedOverlay(level, requiredScore, userScore) {
-    const gameBox = document.querySelector('.game-box');
-    const originalDisplay = gameBox.style.display;
-    gameBox.style.display = 'none';
-    
-    const overlay = document.createElement('div');
-    overlay.className = 'level-locked-overlay';
-    overlay.innerHTML = `
-        <div class="level-locked-content">
-            <h2>🔒 Level ${level.toUpperCase()} Terkunci</h2>
-            <p>Maaf, Anda membutuhkan minimal <strong>${requiredScore}</strong> poin untuk mengakses level ${level.toUpperCase()}.</p>
-            <p>Skor Anda saat ini: <strong>${userScore}</strong></p>
-            <p>Terus bermain di level yang tersedia untuk mengumpulkan poin!</p>
-            <button class="btn-gradient" onclick="closeLevelLockedOverlay()">Kembali Pilih Level</button>
-        </div>
-    `;
-    
-    document.body.appendChild(overlay);
-    
-    overlay.setAttribute('data-original-display', originalDisplay);
-}
-
-function closeLevelLockedOverlay() {
-    const overlay = document.querySelector('.level-locked-overlay');
-    if (overlay) {
-        const gameBox = document.querySelector('.game-box');
-        const originalDisplay = overlay.getAttribute('data-original-display') || 'block';
-        gameBox.style.display = originalDisplay;
-        overlay.remove();
-        
-        if (currentUser.score >= minimumScores.hard) {
-            levelSelect.value = 'hard';
-        } else if (currentUser.score >= minimumScores.medium) {
-            levelSelect.value = 'medium';
-        } else {
-            levelSelect.value = 'easy';
-        }
-    }
-}
-
-function getWordByLevel(level) {
-    const daftarKata = JSON.parse(localStorage.getItem("daftarKata")) || obj;
-    const wordList = daftarKata[level];
-    
-    if (!wordList || wordList.length === 0) {
-        console.error(`Tidak ada kata untuk level ${level}`);
-        return null;
-    }
-    
-    return wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
-}
-
-if (levelSelect) {
-    levelSelect.addEventListener('change', function(e) {
-        const selectedLevel = e.target.value;
-        
-        if (!checkLevelAccess(selectedLevel)) {
-            if (currentUser.score >= minimumScores.hard) {
-                levelSelect.value = 'hard';
-            } else if (currentUser.score >= minimumScores.medium) {
-                levelSelect.value = 'medium';
-            } else {
-                levelSelect.value = 'easy';
-            }
-            return;
-        }
-        
-        const newWord = getWordByLevel(selectedLevel);
-        if (newWord) {
-            localStorage.setItem("kataTarget", newWord);
-            localStorage.setItem("selectedLevel", selectedLevel);
-            location.reload(); 
-        }
-    });
-}
-
-if (document.getElementById('userScore')) {
-    document.getElementById('userScore').textContent = currentUser.score || 0;
-}
-
-
-   let obj = {
-    easy: ['kunci', 'rumah', 'bulan', 'pintu', 'mobil'],              // 5 huruf
-    medium: ['komputer', 'pensil', 'pelajar', 'kantong', 'tulisan', 'baterai', 'kamera'], // 7 huruf
-    hard: ['peralatan', 'kesempatan', 'pengobatan', 'kebakaran', 'pembalasan', 'keberatan', 'perjalanan', 'pemiliknya', 'kesehatan', 'pelayanan'] // 10 huruf
-};
-
-
-
-let targetWord = localStorage.getItem("kataTarget");
-localStorage.setItem("daftarKata", JSON.stringify(obj));
-
-let selectedLevel = localStorage.getItem("selectedLevel") || "easy";
-
-if (levelSelect) {
-    levelSelect.value = selectedLevel;
-}
-
-if (!checkLevelAccess(selectedLevel, false)) {
-    if (currentUser.score >= minimumScores.medium) {
-        selectedLevel = 'medium';
-    } else {
-        selectedLevel = 'easy';
-    }
-    if (levelSelect) {
-        levelSelect.value = selectedLevel;
-    }
-    localStorage.setItem("selectedLevel", selectedLevel);
-}
-
-if (!targetWord) {
-    targetWord = getWordByLevel(selectedLevel);
-    console.log(`Level: ${selectedLevel}, Kata: ${targetWord}`);
-    localStorage.setItem("kataTarget", targetWord);
-}
-
-if (document.getElementById('currentLevelInfo')) {
+if (document.getElementById("currentLevelInfo")) {
     const levelInfo = {
         easy: "Level Easy - 100 poin per kata",
         medium: "Level Medium - 200 poin per kata",
-        hard: "Level Hard - 300 poin per kata"
+        hard: "Level Hard - 300 poin per kata",
     };
-    document.getElementById('currentLevelInfo').textContent = levelInfo[selectedLevel];
+    document.getElementById("currentLevelInfo").textContent =
+        levelInfo[selectedLevel];
 }
 
 const maxKesempatan = 5;
@@ -173,14 +24,14 @@ document.getElementById(
 
 function buatBarisBaru() {
     const row = document.createElement("div");
-    row.classList.add("row-bar", "d-flex", "fade-in");
-    
-    if (maxPerBaris <= 5) {
+    row.classList.add("row-bar", "d-flex", "fade-in", "pt-1", "pb-2");
+
+    if (maxPerBaris <= 4) {
         row.classList.add("gap-3");
-    } else if (maxPerBaris <= 7) {
-        row.classList.add("gap-2");
+    } else if (maxPerBaris <= 5) {
+        row.classList.add("gap-3");
     } else {
-        row.classList.add("gap-1");
+        row.classList.add("gap-3");
     }
 
     for (let i = 0; i < maxPerBaris; i++) {
@@ -188,7 +39,7 @@ function buatBarisBaru() {
         input.className = "letter-input";
         input.setAttribute("maxlength", "1");
         input.setAttribute("type", "text");
-        
+
         if (maxPerBaris > 7) {
             input.style.width = "40px";
             input.style.height = "40px";
@@ -198,10 +49,12 @@ function buatBarisBaru() {
             input.style.height = "45px";
             input.style.fontSize = "20px";
         }
-        
+
         row.appendChild(input);
     }
     container.appendChild(row);
+    console.log(targetWord);
+
     setupAutoFocus();
 }
 
@@ -284,20 +137,18 @@ function cekTebakan() {
     }
 
     if (guess === targetWord) {
-        // ========== MODIFIKASI SCORE BERDASARKAN LEVEL - MULAI ==========
         const scoreEarned = scorePerLevel[selectedLevel] || 100;
-        alert(`🎉 BERHASIL! Selamat ${currentUser.userName} anda mendapatkan SCORE ${scoreEarned}`);
+        alert(
+            `🎉 BERHASIL! Selamat ${currentUser.userName} anda mendapatkan SCORE ${scoreEarned}`
+        );
         currentUser.score += scoreEarned;
-        
-        // Update user di array dengan cara yang benar
-        const userIndex = userList.findIndex(u => u.id === id);
+
+        const userIndex = userList.findIndex((u) => u.id === id);
         if (userIndex !== -1) {
             userList[userIndex] = currentUser;
         }
-        
-        localStorage.setItem('daftarUser', JSON.stringify(userList));
-        localStorage.removeItem("selectedLevel"); 
-        
+
+        localStorage.setItem("daftarUser", JSON.stringify(userList));
         resultMessage.innerText = "";
         location.reload();
         return;
@@ -312,7 +163,7 @@ function cekTebakan() {
             buatBarisBaru();
         }
     } else {
-        resultMessage.innerText = `Kesempatan habis. Jawabannya: ${targetWord}`;
+        resultMessage.innerHTML = `Kesempatan habis. Jawabannya: ${targetWord}<br><a href="#" onclick="window.location.reload()" class="try-again-link">Coba Lagi</a>`;
         document.getElementById("chance").innerText = ` 0`;
     }
 }
@@ -347,4 +198,11 @@ function closeGuide() {
     document.getElementById("guideModal").style.display = "none";
 }
 
+function closeGame() {
+    window.location.href = "index.html";
+    localStorage.removeItem("selectedLevel");
+}
+
+const leaderboardLink = document.getElementById("leaderboardLink");
+leaderboardLink.href = `leaderboard.html?id=${id}`;
 buatBarisBaru();
