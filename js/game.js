@@ -39,21 +39,9 @@ function buatBarisBaru() {
         input.className = "letter-input";
         input.setAttribute("maxlength", "1");
         input.setAttribute("type", "text");
-
-        if (maxPerBaris > 7) {
-            input.style.width = "40px";
-            input.style.height = "40px";
-            input.style.fontSize = "18px";
-        } else if (maxPerBaris > 5) {
-            input.style.width = "45px";
-            input.style.height = "45px";
-            input.style.fontSize = "20px";
-        }
-
         row.appendChild(input);
     }
     container.appendChild(row);
-    console.log(targetWord);
 
     setupAutoFocus();
 }
